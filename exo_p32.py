@@ -9,12 +9,13 @@ def main():
     resultat_h = executer(circuit_h())
     resultat_hx = executer(circuit_hx())
     resultat_hxy = executer(circuit_hxy())
+    resultat_hx_simy = simulation_y(resultat_hx)
 
-    print_vector('|psy>               ', etat_init)
-    print_vector('|psy> -> H          ', resultat_h)
-    print_vector('|psy> -> H -> X     ', resultat_hx)
-    print_vector('|psy> -> H -> X -> Y', resultat_hxy)
-
+    print_vector('|psy>                   ', etat_init)
+    print_vector('|psy> -> H              ', resultat_h)
+    print_vector('|psy> -> H -> X         ', resultat_hx)
+    print_vector('|psy> -> H -> X -> Y    ', resultat_hxy)
+    print_vector('|psy> -> H -> X -> sim y', resultat_hx_simy)
 
 def etat_initial():
     return [np.sqrt(3)/2, (1 - 1j)/(2*np.sqrt(2))]
@@ -56,8 +57,14 @@ def b_a_ba_y():
     print_vector('Y(|0>)', r0)
     print_vector('Y(|1>)', r1)
 
+def simulation_y(etat):
+    y_mat = np.array([[0, -1j],[1j, 0]])
+    etat = np.array(etat)
+    return np.matmul(y_mat, etat)
+
+
 def print_vector(name: str, vector) -> None:
-    print(f'{name} = [{vector[0]:.6f}; {vector[1]:.6f}')
+    print(f'{name} = [{vector[0]:.6f}; {vector[1]:.6f}]')
 
 def executer(circuit):
     job = q.execute(circuit, simulator)
