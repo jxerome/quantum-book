@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import qiskit as q
 import numpy as np
 
@@ -15,7 +17,7 @@ def main():
     print_vector('|psy> -> H              ', resultat_h)
     print_vector('|psy> -> H -> X         ', resultat_hx)
     print_vector('|psy> -> H -> X -> Y    ', resultat_hxy)
-    print_vector('|psy> -> H -> X -> sim y', resultat_hx_simy)
+    print_vector('|psy> -> H -> X -> sim Y', resultat_hx_simy)
 
 def etat_initial():
     return [np.sqrt(3)/2, (1 - 1j)/(2*np.sqrt(2))]
