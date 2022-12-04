@@ -1,6 +1,6 @@
 tasks:
   - name: Install Python and dependencies
     init: |
-      pyenv install 3.10.4
-      pyenv local 3.10.4
+      pyenv install 3.10.8
+      pyenv local 3.10.8
       pip install -r requirements.txt
