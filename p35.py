@@ -41,8 +41,8 @@ def random_vector():
 
 def create_circuit1(psy1, psy2):
     circuit = q.QuantumCircuit(2)
-    # circuit.append(q.extensions.Initialize([psy1.real, psy1.imag, psy2.real, psy22.imag], num_qubits=2), [0, 1])
-    circuit.initialize(psy1.extend(psy2), [0, 1])
+    circuit.initialize(psy1, [0])
+    circuit.initialize(psy2, [1])
     circuit.h(0)
     circuit.h(1)
     circuit.cx(0, 1)
@@ -52,7 +52,8 @@ def create_circuit1(psy1, psy2):
 
 def create_circuit2(psy1, psy2):
     circuit = q.QuantumCircuit(2)
-    circuit.append(q.extensions.Initialize([psy1, psy2]), [0, 1])
+    circuit.initialize(psy1, [0])
+    circuit.initialize(psy2, [1])
     circuit.cx(1, 0)
     return circuit
     
