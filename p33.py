@@ -1,4 +1,4 @@
-#!/usr/bin/env streamlit run 
+#!/usr/bin/env -S streamlit run 
 
 import qiskit as q
 import PIL
