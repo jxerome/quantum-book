@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import streamlit as st
 import random
 import math
+import numpy as np
 
 def main():
     st.set_page_config(page_title='Quantum circuit page 35', page_icon=":atom_symbol:")
@@ -17,8 +18,7 @@ def main():
     psy2 = random_vector()
 
     st.header("État initial")
-    st.write(f"psy1 = {psy1}")
-    st.write(f"psy2 = {psy2}")
+    st.code(f"psy1 = {psy1}\npsy2 = {psy2}")
 
     circuit1 = create_circuit1(psy1, psy2)
     circuit2 = create_circuit2(psy1, psy2)
@@ -28,7 +28,18 @@ def main():
     st.header("Schéma du circuit 2")
     st.write(circuit2.draw(output='mpl'))
 
+    res1 = executer(circuit1, simulator)
+    res2 = executer(circuit2, simulator)
 
+    st.header("Résultats")
+    st.code(f"res1 = {res1}\nres2 = {res2}")
+
+    delta = np.linalg.norm(res1 - res2)
+    st.metric("Différence entre les résultats", f"{delta:.3e}")
+    if delta < 1e-15:
+        st.success("Les résultats sont les mêmes.")
+    else:
+        st.error("Les résultats sont différents.")
 
 def random_coef():
     return complex(random.random(), random.random())
@@ -56,5 +67,10 @@ def create_circuit2(psy1, psy2):
     circuit.initialize(psy2, [1])
     circuit.cx(1, 0)
     return circuit
-    
+
+def executer(circuit, simulator):
+    job = q.execute(circuit, simulator)
+    resultat = job.result()
+    return resultat.get_statevector()
+ 
 main()
