@@ -6,6 +6,7 @@ import PIL
 import matplotlib.pyplot as plt
 import streamlit as st
 import numpy as np
+import pyarrow as pa
 
 
 class BackendSummary:
@@ -28,12 +29,31 @@ def main():
     st.title("Quantum circuit page 37")
 
     provider = ibmq_provider()
-    backends = [ BackendSummary(backend) for backend in provider.backends() ]
+
+    st.header("Backends")
+    backends = load_backends(provider)
     st.table(backends)
 
 def ibmq_provider():
     if 'ibmq_provider' not in st.session_state:
-        st.session_state['ibmq_provider'] = q.IBMQ.load_account()
+        with st.spinner('Connection to IBM Quantum provider'):
+            st.session_state['ibmq_provider'] = q.IBMQ.load_account()
     return st.session_state['ibmq_provider']
+
+
+
+@st.cache
+def load_backends(provider):
+    backends=[]
+    barContainer = st.empty()
+    progressBar = barContainer.progress(0)
+    backendList=provider.backends()
+    count=len(backendList)
+    for i,backend in enumerate(backendList, start=1):
+        backends.append(BackendSummary(backend))
+        progressBar.progress(i/count)
+    progressBar.progress(100)
+    barContainer.empty()
+    return backends
     
 main()

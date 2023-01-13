@@ -5,3 +5,4 @@ qiskit-ibmq-provider
 streamlit
 matplotlib
 pylatexenc
+pyarrow
