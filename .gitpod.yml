@@ -1,8 +1,8 @@
 tasks:
   - name: Install Python and dependencies
     init: |
-      pyenv install 3.10.7
-      pyenv local 3.10.7
+      pyenv install 3.11.1
+      pyenv local 3.11.1
       python -m venv venv
       . venv/bin/activate
       pip install -r requirements.txt
