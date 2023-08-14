@@ -1,7 +1,8 @@
 Pillow
 numpy
 qiskit
-qiskit-ibmq-provider
+qiskit-aer
+qiskit-ibm-provider
 streamlit
 matplotlib
 pylatexenc

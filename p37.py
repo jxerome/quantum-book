@@ -1,6 +1,7 @@
 #!/usr/bin/env -S streamlit run
 
 import qiskit as q
+from qiskit_ibm_provider import IBMProvider
 from qiskit.tools.monitor import job_monitor
 import PIL
 import matplotlib.pyplot as plt
@@ -12,7 +13,7 @@ import pyarrow as pa
 class BackendSummary:
     def __init__(self, backend) -> None:
         self.backend = backend
-        self.name = backend.name()
+        self.name = backend.name
         status = backend.status()
         self.active = status.operational and status.status_msg == 'active'
         self.pending_jobs = status.pending_jobs
@@ -37,7 +38,7 @@ def main():
 def ibmq_provider():
     if 'ibmq_provider' not in st.session_state:
         with st.spinner('Connection to IBM Quantum provider'):
-            st.session_state['ibmq_provider'] = q.IBMQ.load_account()
+            st.session_state['ibmq_provider'] = IBMProvider()
     return st.session_state['ibmq_provider']
 
 

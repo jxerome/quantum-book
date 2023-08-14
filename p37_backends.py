@@ -1,13 +1,13 @@
 #!/usr/bin/env python 
 
 import qiskit as q
-from qiskit.providers.ibmq import IBMQ
+from qiskit_ibm_provider import IBMProvider
 import time
 
 class BackendSummary:
     def __init__(self, backend) -> None:
         self.backend = backend
-        self.name = backend.name()
+        self.name = backend.name
         status = backend.status()
         self.active = status.operational and status.status_msg == 'active'
         self.pending_jobs = status.pending_jobs
@@ -22,17 +22,11 @@ class BackendSummary:
 def main():
     start = time.time_ns()
 
-    provider = IBMQ.load_account()
+    provider = IBMProvider(instance="ibm-q/open/main")
 
     end = time.time_ns()
     print(f"load account { (end - start)  / 1_000_000 }")
     start = end
-
-    # provider = IBMQ.get_provider(group='open')
-
-    # end = time.time_ns()
-    # print(f"get_provider { (end - start)  / 1_000_000 }")
-    # start = end
 
     raw_backends = provider.backends()
 
